@@ -69,6 +69,7 @@ jobs:
             396847262656.dkr.ecr.us-east-1.amazonaws.com/employee_service:${{ github.sha }}
             396847262656.dkr.ecr.us-east-1.amazonaws.com/employee_service:latest
 
+            
   deploy:
     name: Deploy to ECS
     needs: docker-build-push
