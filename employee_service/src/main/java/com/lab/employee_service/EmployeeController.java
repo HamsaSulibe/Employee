@@ -24,7 +24,6 @@ class EmployeeController {
   //   return employeeService.findAll();
   // }
 
-  // ✅ أضف هذا بدلًا من الميثود المحذوف
 
 @GetMapping("/employees")
 public ResponseEntity<String> notImplemented() {
