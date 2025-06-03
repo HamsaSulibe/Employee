@@ -1,5 +1,6 @@
 package com.lab.employee_service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -18,10 +19,17 @@ class EmployeeController {
   @Autowired
   private EmployeeService employeeService;
 
-  @GetMapping("/employees")
-  CollectionModel<EntityModel<EmployeeDTO>> all() {
-    return employeeService.findAll();
-  }
+  // @GetMapping("/employees")
+  // CollectionModel<EntityModel<EmployeeDTO>> all() {
+  //   return employeeService.findAll();
+  // }
+
+  // ✅ أضف هذا بدلًا من الميثود المحذوف
+
+@GetMapping("/employees")
+public ResponseEntity<String> notImplemented() {
+    return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("Method not implemented");
+}
 
   @PostMapping("/employees")
   ResponseEntity<?> newEmployee(@RequestBody EmployeeDTO newEmployee) {

@@ -32,16 +32,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private DepartmentClient departmentClient;
 
-    @Override
-    public CollectionModel<EntityModel<EmployeeDTO>> findAll() {
-        List<EntityModel<EmployeeDTO>> employees = repository.findAll().stream() //
-                .map(EmployeeMapper::toDTO) //
-                .map(assembler::toModel) //
-                .collect(Collectors.toList());
+    // @Override
+    // public CollectionModel<EntityModel<EmployeeDTO>> findAll() {
+    //     List<EntityModel<EmployeeDTO>> employees = repository.findAll().stream() //
+    //             .map(EmployeeMapper::toDTO) //
+    //             .map(assembler::toModel) //
+    //             .collect(Collectors.toList());
 
-        return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
+    //     return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
 
-    }
+    // }
 
     @Override
     public ResponseEntity<?> newEmployee(EmployeeDTO newEmployee) {
@@ -117,6 +117,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Department service is unavailable");
         }
+    }
+
+    @Override
+    public CollectionModel<EntityModel<EmployeeDTO>> findAll() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
 }
