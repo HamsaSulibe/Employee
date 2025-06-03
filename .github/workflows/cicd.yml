@@ -28,12 +28,13 @@ jobs:
             ${{ runner.os }}-m2-
 
       - name: Build with Maven
+        working-directory: ./employee_service
         run: mvn clean package --batch-mode
-
       - name: Run tests
+        working-directory: ./employee_service
         run: mvn test --batch-mode
-
       - name: Static analysis (Checkstyle)
+        working-directory: ./employee_service
         run: mvn checkstyle:check
 
   docker-build-push:
@@ -63,11 +64,12 @@ jobs:
       - name: Build, tag & push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./employee_service
           push: true
           tags: |
             396847262656.dkr.ecr.us-east-1.amazonaws.com/employee_service:${{ github.sha }}
             396847262656.dkr.ecr.us-east-1.amazonaws.com/employee_service:latest
+
 
   deploy:
     name: Deploy to ECS
@@ -85,18 +87,7 @@ jobs:
       - name : Determine environment
         id: env
         run: |
-          if [ "$EVENT_NAME" = "pull_request" ]; then
-            REF="$PR_BASE_REF"
-          else
-            REF="${GITHUB_REF##*/}"
-          fi
-
-          case "$REF" in
-            main)      echo "ENV=production"  >> $GITHUB_ENV ;;
-            staging)   echo "ENV=pre-prod"    >> $GITHUB_ENV ;;
-            develop)   echo "ENV=development" >> $GITHUB_ENV ;;
-            *)         echo "ENV=development" >> $GITHUB_ENV ;;
-          esac
+      
 
 
       - name: Deploy to the right ECS service
@@ -111,3 +102,6 @@ jobs:
             --cluster  "$CLUSTER_NAME" \
             --service  "$SERVICE_NAME" \
             --force-new-deployment
+
+
+            
